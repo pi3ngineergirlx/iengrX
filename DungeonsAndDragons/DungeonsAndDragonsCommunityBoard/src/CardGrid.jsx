@@ -13,6 +13,13 @@ const CardGrid = () => {
                 button ='Explore further'/>
             </div>
             <div className='cosplay'>
+                <Card title='CAD' 
+                color ='black'
+                description ='CAD, or Computer-Aided Design, is a type of software
+                that allows users to create precise drawings or technical illustrations.
+                Learn to create 2D or 3D CAD models of various cosplay props for D&D 
+                characters or your favorite characters from movies, shows, or books!'
+                button ='Learn CAD'/>
                 <Card title='Cosplay Conventions' 
                 color ='black'
                 description ='Cosplay as your favorite D&D characters, or as any
