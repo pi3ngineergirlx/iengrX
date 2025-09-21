@@ -20,6 +20,20 @@ const CardGrid = () => {
                 Learn to create 2D or 3D CAD models of various cosplay props for D&D 
                 characters or your favorite characters from movies, shows, or books!'
                 button ='Learn CAD'/>
+                <Card title='Woodworking' 
+                color ='black'
+                description ='Learn to craft wooden props, weapons, and armor for
+                your favorite characters! Develop skills for using various hand and
+                power tools, as well as techniques for cutting, shaping, engraving,
+                and joining wood.'
+                button ='Learn Woodworking'/>
+                <Card title='3D Printing' 
+                color ='black'
+                description ='3D printing is a form of additive manufacturing involving
+                the production of `three-dimensional objects from a digital file, like a 
+                CAD model. Make your CAD models come to life by 3D printing parts for your
+                weapons, armor, and cosplay props!'
+                button ='Learn 3D Printing!'/>
                 <Card title='Cosplay Conventions' 
                 color ='black'
                 description ='Cosplay as your favorite D&D characters, or as any
