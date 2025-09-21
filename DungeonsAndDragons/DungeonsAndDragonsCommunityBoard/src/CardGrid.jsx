@@ -44,10 +44,11 @@ const CardGrid = () => {
             <div className='gaming'>
                 <Card title='Rules' 
                 color ='white'
-                description ='Cosplay as your favorite D&D characters, or as any
-                other characters from movies, shows, or books, and meet other fans!
-                Showcase your crafting and STEM skills, and connect to pop culture!'
-                button ='Find Cosplay Events'/>
+                description ='Dungeons and Dragons is a tabletop role-playing game (RPG)
+                where players create characters and develop adventures led by a
+                Dungeon Master (DM). The game is played using dice, miniatures, and 
+                maps to represent the characters and their surroundings.'
+                button ='Learn D&D Rules'/>
             </div>
         </div>
     );
