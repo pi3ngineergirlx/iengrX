@@ -1,12 +1,12 @@
 import './App.css';
-import CardGrid from './CardGrid';
+import Card from './Card';
 const App = () => {
 
   return (
     <div className="App">
       <h1>Dungeons and Dragons</h1>
       <h3>iengrX</h3>
-      <CardGrid/>
+      <Card/>
     </div>
   )
 }

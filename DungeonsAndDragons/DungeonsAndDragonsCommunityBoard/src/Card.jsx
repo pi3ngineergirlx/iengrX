@@ -1,4 +1,4 @@
-const CardGrid = () => {
+const Card = () => {
     return (
         <div>
             {/* Card grid will go here */}
@@ -6,4 +6,4 @@ const CardGrid = () => {
     )
 }
 
-export default CardGrid
+export default Card
