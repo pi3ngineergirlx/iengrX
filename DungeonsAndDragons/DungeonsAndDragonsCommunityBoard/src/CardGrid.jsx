@@ -13,7 +13,12 @@ const CardGrid = () => {
                 button ='Explore further'/>
             </div>
             <div className='cosplay'>
-
+                <Card title='Cosplay Conventions' 
+                color ='black'
+                description ='Cosplay as your favorite D&D characters, or as any
+                other characters from movies, shows, or books, and meet other fans!
+                Showcase your crafting and STEM skills, and connect to pop culture!'
+                button ='Find Cosplay Events'/>
             </div>
             <div className='gaming'>
 
