@@ -1,9 +1,9 @@
-const Card = () => {
+const Card = (props) => {
     return (
-        <div>
-            {/* Card grid will go here */}
-        </div>
+        <td className={'card' + props.color}>
+            <h3>{props.title}</h3>
+        </td>
     )
 }
 
-export default Card
+export default Card;
