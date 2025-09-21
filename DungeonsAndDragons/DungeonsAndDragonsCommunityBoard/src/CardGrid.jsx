@@ -34,6 +34,13 @@ const CardGrid = () => {
                 CAD model. Make your CAD models come to life by 3D printing parts for your
                 weapons, armor, and cosplay props!'
                 button ='Learn 3D Printing!'/>
+                <Card title='Sewing' 
+                color ='chartreuse'
+                description ='Learn to sew and create costumes for your favorite D&D characters,
+                or for any other characters from movies, shows, or books! Develop skills
+                for using a sewing machine, as well as techniques for hand sewing, fabric
+                cutting, and pattern making.'
+                button ='Learn Sewing!'/>
                 <Card title='Cosplay Conventions' 
                 color ='chartreuse'
                 description ='Cosplay as your favorite D&D characters, or as any
