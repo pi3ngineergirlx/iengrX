@@ -16,3 +16,8 @@
   min-width: 320px;
   min-height: 100vh;
 }
+
+h1{
+  font-family: 'Fascinate Inline', 'Courier New', sans-serif;
+  font-size: 50px;
+}
