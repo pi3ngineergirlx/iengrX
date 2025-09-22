@@ -21,3 +21,13 @@ h1{
   font-family: 'Fascinate Inline', 'Courier New', sans-serif;
   font-size: 50px;
 }
+
+h3{
+  font-family: 'Fascinate Inline', 'Courier New', sans-serif;
+  font-size: 30px;
+}
+
+h5{
+  font-family: 'Courier New', sans-serif;
+  font-size: 15px;
+}
