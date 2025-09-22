@@ -45,6 +45,7 @@ h5{
   /* flexbox */
   display: flex;
   justify-content: center;
+  align-items: center;
   /* layout */
   padding: 20px;
   margin: 10px;
