@@ -31,3 +31,22 @@ h5{
   font-family: 'Courier New', sans-serif;
   font-size: 15px;
 }
+
+.card-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.gaming, .story, .cosplay {
+  /* flexbox */
+  display: flex;
+  justify-content: center;
+  /* layout */
+  padding: 20px;
+  margin: 10px;
+  /* border */
+  border: 1px solid black;
+  border-radius: 10px;
+  /* colors */
+  background-color: chartreuse;
+}
