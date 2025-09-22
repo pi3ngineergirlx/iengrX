@@ -17,6 +17,10 @@
   min-height: 100vh;
 }
 
+h1, h3, h5 {
+  margin: 0;
+}
+
 h1{
   font-family: 'Fascinate Inline', 'Courier New', sans-serif;
   font-size: 50px;
