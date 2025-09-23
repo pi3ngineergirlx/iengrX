@@ -40,6 +40,11 @@ h5{
   /* layout */
   padding: 20px;
   margin: 20px;
+  width: 100%;
+  max-width: 400px;
+  min-width: 200px;
+  height: 280px;
+  box-sizing: border-box;
   /* colors */
   background: white;
   color: black;
