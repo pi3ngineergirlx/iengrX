@@ -41,9 +41,9 @@ h5{
   padding: 20px;
   margin: 20px;
   width: 100%;
-  max-width: 400px;
+  max-width: 350px;
   min-width: 200px;
-  height: 280px;
+  height: 300px;
   box-sizing: border-box;
   /* colors */
   background: white;
@@ -61,6 +61,7 @@ h5{
 .gaming, .story, .cosplay {
   /* flexbox */
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
@@ -72,4 +73,12 @@ h5{
   border-radius: 10px;
   /* colors */
   background-color: chartreuse;
+}
+
+.gaming-cards, .story-cards, .cosplay-cards {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
