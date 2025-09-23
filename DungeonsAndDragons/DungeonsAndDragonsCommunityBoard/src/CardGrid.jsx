@@ -14,6 +14,12 @@ const CardGrid = () => {
                     a Dungeon Master (DM). The game is played using dice, miniatures,
                     and maps to represent the characters and their surroundings.'
                     button='Learn D&D Rules'/>
+                    <Card title='Science Fiction D&D' 
+                    description='iengrX explores a sci-fi and futuristic take on Dungeons
+                    and Dragons, with a focus on biological and technological themes.
+                    Create futuristic cities focused on sustainability and human- centered
+                    design, and apply your knowledge of science and engineering!'
+                    button='Explore Sci-Fi D&D'/>
                 </div>
             </div>
             <div className='story'>
