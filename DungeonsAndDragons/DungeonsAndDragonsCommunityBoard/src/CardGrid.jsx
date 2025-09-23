@@ -27,6 +27,13 @@ const CardGrid = () => {
                     they affect personal identity as defined by the mind and thoughts in
                     a capitalistic society prone to corruption'
                     button='Explore further'/>
+                    <Card title='Parallel Universes' 
+                    description='Explore the theory of the multiverse and how it emerges
+                    from multiple realities emerging from quantum events. It has been
+                    theorized that for every possibility, a universe exists. Create stories
+                    in which your characters can travel between these universes and possibly
+                    meet alternate versions of themselves!'
+                    button='Explore further'/>
                 </div>
             </div>
             <div className='cosplay'>
