@@ -34,6 +34,13 @@ const CardGrid = () => {
                     in which your characters can travel between these universes and possibly
                     meet alternate versions of themselves!'
                     button='Explore further'/>
+                    <Card title='Extraterrestrial Life' 
+                    description='Ponder the existence of life elsewhere in the universe, and
+                    how humans might interact with extraterrestrial civilizations. Theorize
+                    about the biological properties and evolution of alien species based on
+                    their environment. Search for a planet in the Goldilocks Zone of another
+                    solar system.'
+                    button='Explore further'/>
                 </div>
             </div>
             <div className='cosplay'>
