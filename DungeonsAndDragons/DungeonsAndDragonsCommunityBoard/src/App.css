@@ -17,7 +17,7 @@
   min-height: 100vh;
 }
 
-h1, h3, h5 {
+h1, h3, h4, h5 {
   margin: 0;
 }
 
@@ -29,6 +29,11 @@ h1{
 h3{
   font-family: 'Fascinate Inline', 'Courier New', sans-serif;
   font-size: 30px;
+}
+
+h4{
+  font-family:'Courier New', sans-serif;
+  font-size: 22px;
 }
 
 h5{
@@ -43,7 +48,7 @@ h5{
   width: 100%;
   max-width: 350px;
   min-width: 200px;
-  height: 300px;
+  height: 280px;
   box-sizing: border-box;
   /* colors */
   background: white;
