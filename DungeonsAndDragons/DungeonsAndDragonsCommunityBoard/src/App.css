@@ -50,6 +50,10 @@ h5{
   min-width: 200px;
   height: 280px;
   box-sizing: border-box;
+  /* flexbox */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   /* colors */
   background: white;
   color: black;
