@@ -46,7 +46,8 @@ GIF created with ...
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+There was initially extra white space on the left and right sides of the website. This issue
+was fixed through the removal of max-width in the #root section of App.css. An issue with only the middle half of the computer screen displaying the webpage was also present because of the flex-direction for all items being set to column. This issue was fixed by rearranging divs and classes so that the flex-direction for the items within the section containers was set to column but with the flex-direction for the card containers being set to row.
 
 ## License
 
