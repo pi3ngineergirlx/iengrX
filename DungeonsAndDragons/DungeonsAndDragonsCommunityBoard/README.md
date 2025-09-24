@@ -2,7 +2,8 @@
 
 Submitted by: **Soma Hebbar**
 
-This web app: **insert description**
+This web app: **is a website for a science fiction based version of Dungeons and Dragons, the
+popular tabletop role-playing game. It outlines possibilities for storylines emerging from research and theories on futurism, technology, and biological engineering. The cosplay section introduces users to dressing and acting as their D&D characters, and also to the STEM skills associated with cosplaying as their favorite characters from movies, books, and TV shows.**
 
 Time spent: **5** hours spent in total
 
