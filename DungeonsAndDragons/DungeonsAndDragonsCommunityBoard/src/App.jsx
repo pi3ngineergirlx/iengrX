@@ -1,5 +1,5 @@
 import './App.css';
-import CardGrid from './CardGrid';
+import CardGrid from './components/CardGrid';
 
 const App = () => {
   return (
