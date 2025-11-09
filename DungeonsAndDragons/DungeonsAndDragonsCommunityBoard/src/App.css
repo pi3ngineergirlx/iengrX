@@ -1,10 +1,19 @@
 /* GLOBAL STYLES */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
 /* root */
 #root {
+  /* layout */
+  box-sizing: border-box;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  /* font */
   font-family: 'Courier New', sans-serif;
+  /* colors */
   color: black;
   background-color: rgb(209, 255, 163);
 }
