@@ -19,7 +19,7 @@ html, body, #root {
 }
 
 /* app */
-.App {
+.App, .CharacterDesigner {
   /* add top padding to push content below navbar */
   padding-top: 70px;
 }
@@ -86,7 +86,7 @@ h5{
 .nav-link {
   /* layout */
   padding: 10px;
-  margin: 10px;
+  margin: 0 5px;
   /* colors */
   background-color: chartreuse;
   color: black;
