@@ -5,9 +5,11 @@ import '../App.css';
 const CharacterDesigner = () => {
   return (
     <>
-      <Navbar />
+    <Navbar />
+    <div className='CharacterDesigner'>
       <h1>Character Designer</h1>
       <h4>iengrX</h4>
+    </div>
     </>
   )
 }
