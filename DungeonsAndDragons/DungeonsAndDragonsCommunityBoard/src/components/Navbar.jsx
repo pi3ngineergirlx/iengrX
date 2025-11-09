@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Navbar = ({ links = [{ to: '/', label: 'Home' }] }) => {
+const defaultLinks = [
+    { to: '/', label: 'Home' },
+    { to: '/characterdesigner', label: 'Character Designer' }
+];
+
+const Navbar = ({ links = defaultLinks }) => {
     return (
         <header className="navbar">
             <nav className="nav-inner">

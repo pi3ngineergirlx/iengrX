@@ -147,6 +147,7 @@ h5{
 }
 
 .gaming-cards, .story-cards, .cosplay-cards {
+  /* flexbox */
   display: flex;
   flex-direction: row;
   align-items: center;
