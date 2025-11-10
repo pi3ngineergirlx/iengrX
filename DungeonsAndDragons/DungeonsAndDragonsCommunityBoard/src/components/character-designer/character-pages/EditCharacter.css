@@ -1,9 +1,14 @@
 /* INPUT, SUBMIT, AND DELETE FIELDS */
 /* basic */
-input {
+input, textarea {
     /* layout */
+    box-sizing: border-box;
+    width: 100%;
     padding: 10px;
-    margin: 10px;
+    margin: 10px 0;
+    /* font */
+    font-family: 'Courier New', sans-serif;
+    font-size: 18px;
     /* border */
     border: 1px solid black;
     border-radius: 10px;
