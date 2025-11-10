@@ -19,7 +19,7 @@ const ReadCharacter = (props) => {
                     <CharacterCard 
                         key={character.id}
                         id={character.id} 
-                        title={character.title}
+                        name={character.name}
                         author={character.author}
                         description={character.description}
                     />

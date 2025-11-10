@@ -10,7 +10,7 @@ const EditCharacter = ({ data = [] }) => {
     const post = data && data.length ? data.find((p) => String(p.id) === String(id)) : null
 
     const [character, setCharacter] = useState(() => ({
-        title: post ? post.title : '',
+        name: post ? post.name : '',
         author: post ? post.author : '',
         description: post ? post.description : '',
     }))
@@ -19,7 +19,7 @@ const EditCharacter = ({ data = [] }) => {
     useEffect(() => {
         if (post) {
             setCharacter({
-                title: post.title || '',
+                name: post.name || '',
                 author: post.author || '',
                 description: post.description || '',
             })
@@ -43,8 +43,8 @@ const EditCharacter = ({ data = [] }) => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="title">Title</label> <br />
-                <input type="text" id="title" name="title" value={character.title} onChange={handleChange} /><br />
+                <label htmlFor="name">Name</label> <br />
+                <input type="text" id="name" name="name" value={character.name} onChange={handleChange} /><br />
                 <br />
 
                 <label htmlFor="author">Author</label><br />

@@ -18,8 +18,8 @@ const CreateCharacter = () => {
     return (
         <div>
             <form>
-                <label htmlFor="title">Title</label> <br />
-                <input type="text" id="title" name="title" onChange={handleChange} /><br />
+                <label htmlFor="name">Name</label> <br />
+                <input type="text" id="name" name="name" onChange={handleChange} /><br />
                 <br/>
 
                 <label htmlFor="author">Author</label><br />
