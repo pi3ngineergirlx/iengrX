@@ -60,26 +60,37 @@ textarea {
     margin-bottom: 50px;
 }
 
-/* CHARACTER ALIGNMENT GRID */
+/* alignment grid */
 .alignment-grid {
+    /* layout */
+    padding: 10px;
+    margin: 10px;
+    /* flexbox */
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-top: 8px;
+    align-items: center;
+    justify-content: center;
 }
 .alignment-row {
+    /* flexbox */
     display: flex;
-    gap: 8px;
 }
 .alignment-cell {
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    background: #fff;
-    cursor: pointer;
-    font-size: 14px;
+    /* layout */
+    padding: 10px;
+    margin: 10px;
+    /* colors */
+    background-color: black;
+    color: white;
+    /* border */
+    border: 1px solid black;
+    border-radius: 10px;
 }
 .alignment-cell.is-selected {
-    border: 2px solid #222;
-    background: #c8f7d4;
+    /* colors */
+    background-color: rgb(209, 255, 163);
+    color: black;
+    /* border */
+    border: 1px solid black;
+    border-radius: 20px;
 }
