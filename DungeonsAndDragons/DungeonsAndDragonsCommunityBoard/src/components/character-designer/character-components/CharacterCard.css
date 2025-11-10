@@ -1,3 +1,4 @@
+/* character card */
 .character-card {
     /* layout */
     padding: 20px;
@@ -16,27 +17,27 @@
     align-items: center;
 }
 
-.betButton {
-    border-radius: 8px;
-    border: 1px solid transparent;
-    padding: 0.6em 1.2em;
-    font-size: 15px;
-    font-weight: 500;
-    font-family: inherit;
-    background-color: #1a1a1a;
+/* details button */
+.detailsButton {
+   /* layout */
+    padding: 10px;
+    margin: 10px;
+    /* colors */
+    background-color: black;
     color:white;
-    cursor: pointer;
-    transition: border-color 0.25s;
+    /* border */
+    border: 1px solid black;
+    border-radius: 10px;
+    /* font */
+    text-decoration: none;
+    font-family: 'Courier New', sans-serif;
+    font-size: 17px;
 }
-.betButton:hover {
-    border-color: #646cff;
-  }
-
-.moreButton {
-    width: 30px;
-    float:right;
-
-}
-.moreButton:hover {
-    cursor: pointer;
+.detailsButton:hover {
+    /* colors */
+    background-color: white;
+    color:black;
+    /* border */
+    border: 1px solid black;
+    border-radius: 20px;
 }
