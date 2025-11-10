@@ -1,35 +1,19 @@
 .character-card {
-    backdrop-filter: blur(2px);
-    border: 1px solid rgba(153, 153, 153, 0.497);
-    border-radius: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-right: 10px;
-    margin-bottom: 25px;
-    width: 400px;
+    /* layout */
+    padding: 20px;
+    margin: 20px;
     text-align: center;
-}
-
-.title {
-    color:white;
-    padding-left:30px;
-    font-size: 24px;
-}
-
-.author {
-    color:white;
-    margin-bottom: 20px;
-    font-size: 20px;
-}
-
-.description {
-    color:white;  
-    text-align: justify;
-    text-justify: inter-word;
-    padding-left: 30px;
-    padding-right: 30px;
-    margin-bottom: 20px;
-    font-size: 15px;
+    /* colors */
+    background-color: chartreuse;
+    color: black;
+    /* border */
+    border: 1px solid black;
+    border-radius: 10px;
+    /* flexbox */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .betButton {
