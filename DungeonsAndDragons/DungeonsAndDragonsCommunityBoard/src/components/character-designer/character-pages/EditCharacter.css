@@ -64,6 +64,22 @@ input[type=submit] {
     border-radius: 20px;
 }
 
+/* CHARACTER INFO FORM */
+/* sections */
+.basic, .appearance, .attributes {
+    /* layout */
+    padding: 20px;
+    margin: 20px;
+    /* colors */
+    background-color: chartreuse;
+    color: black;
+    /* font */
+    font-family: 'Courier New', sans-serif;
+    /* border */
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
 /* alignment grid */
 .alignment-grid {
     /* layout */
