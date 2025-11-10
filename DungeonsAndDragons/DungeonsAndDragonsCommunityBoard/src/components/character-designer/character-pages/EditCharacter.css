@@ -56,3 +56,27 @@ input[type=submit]:hover {
     margin-top: 20px;
     margin-bottom: 50px;
 }
+
+/* CHARACTER ALIGNMENT GRID */
+.alignment-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+.alignment-row {
+    display: flex;
+    gap: 8px;
+}
+.alignment-cell {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+}
+.alignment-cell.is-selected {
+    border: 2px solid #222;
+    background: #c8f7d4;
+}

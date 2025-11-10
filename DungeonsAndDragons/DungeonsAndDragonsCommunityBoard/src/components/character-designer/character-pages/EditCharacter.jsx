@@ -13,6 +13,7 @@ const EditCharacter = ({ data = [] }) => {
         name: post ? post.name : '',
         player: post ? post.player : '',
         description: post ? post.description : '',
+        alignment: post ? post.alignment || '' : '',
     }))
 
     // If post changes (data arrives), sync into local state
@@ -22,6 +23,7 @@ const EditCharacter = ({ data = [] }) => {
                 name: post.name || '',
                 player: post.player || '',
                 description: post.description || '',
+                alignment: post.alignment || '',
             })
         }
     }, [post])
@@ -43,20 +45,75 @@ const EditCharacter = ({ data = [] }) => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="name">Name</label> <br />
-                <input type="text" id="name" name="name" value={character.name} onChange={handleChange} /><br />
-                <br />
-
-                <label htmlFor="player">Player</label><br />
-                <input type="text" id="player" name="player" value={character.player} onChange={handleChange} /><br />
-                <br />
-
-                <label htmlFor="description">Description</label><br />
-                <textarea rows="5" cols="50" id="description" name="description" value={character.description} onChange={handleChange}>
-                </textarea>
-                <br />
-                <input type="submit" value="Submit" />
-                <button type="button" className="deleteButton">Delete</button>
+                <div className='basic'>
+                    <h5>Basic Character Information</h5>
+                    <label htmlFor="name">Name</label> <br />
+                    <input type="text" id="name" name="name" value={character.name} onChange={handleChange} /><br />
+                    <br />
+                    <label htmlFor="player">Player</label><br />
+                    <input type="text" id="player" name="player" value={character.player} onChange={handleChange} /><br />
+                    <br />
+                    <label htmlFor="description">Description</label><br />
+                    <textarea rows="5" cols="50" id="description" name="description" value={character.description} onChange={handleChange}></textarea>
+                    <br />
+                </div>
+                <div className='appearance'>
+                    <h5>Character Appearance</h5>
+                    <label htmlFor="age">Age</label><br />
+                    <input type="text" id="age" name="age" value={character.age} onChange={handleChange} /><br />
+                    <br />
+                    <label htmlFor="gender">Gender</label><br />
+                    <input type="text" id="gender" name="gender" value={character.gender} onChange={handleChange} /><br />
+                    <br />
+                    <label htmlFor="species">Species</label><br />
+                    <input type="text" id="species" name="species" value={character.species} onChange={handleChange} /><br />
+                    <br />
+                </div>
+                <div className='attributes'>
+                    <h5>Character Attributes</h5>
+                    <label htmlFor="role">Role</label><br />
+                    <input type="text" id="role" name="role" value={character.role} onChange={handleChange} /><br />
+                    <br />
+                    <label htmlFor='level'>Level</label><br />
+                    <input type="text" id="level" name="level" value={character.level} onChange={handleChange} /><br />
+                    <br />
+                    <label htmlFor='alignment'>Alignment</label>
+                    <div className="alignment-grid" role="group" aria-label="D and D alignment">
+                        {[
+                            ['Lawful Good','Neutral Good','Chaotic Good'],
+                            ['Lawful Neutral','True Neutral','Chaotic Neutral'],
+                            ['Lawful Evil','Neutral Evil','Chaotic Evil']
+                        ].map((row, rIdx) => (
+                            <div className="alignment-row" key={rIdx}>
+                                {row.map((label) => {
+                                    const selected = character.alignment === label
+                                    return (
+                                        <button
+                                            key={label}
+                                            type="button"
+                                            className={`alignment-cell ${selected ? 'is-selected' : ''}`}
+                                            aria-pressed={selected}
+                                            onClick={() => setCharacter(prev => ({ ...prev, alignment: label }))}
+                                            >
+                                            {label}
+                                        </button>
+                                    )
+                                })}
+                            </div>
+                        ))}
+                    </div>
+                    <br />
+                    <label htmlFor="abilities">Abilities</label><br />
+                    <input type="text" id="abilities" name="abilities" value={character.abilities} onChange={handleChange} /><br />
+                    <br />
+                    <label htmlFor="equipment">Equipment</label><br />
+                    <input type="text" id="equipment" name="equipment" value={character.equipment} onChange={handleChange} /><br />
+                    <br />
+                </div>
+                <div className='submit-delete-buttons'>
+                    <input type="submit" value="Submit" />
+                    <button type="button" className="deleteButton">Delete</button>
+                </div>
             </form>
         </div>
     )
