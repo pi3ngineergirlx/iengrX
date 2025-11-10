@@ -10,7 +10,8 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/characterdesigner" element={<CharacterDesigner />} />
+  {/* include a wildcard so nested subpaths like /characterdesigner/edit/:id match */}
+  <Route path="/characterdesigner/*" element={<CharacterDesigner />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
