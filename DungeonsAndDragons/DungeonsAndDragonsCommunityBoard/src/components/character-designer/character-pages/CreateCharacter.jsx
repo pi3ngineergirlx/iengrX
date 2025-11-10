@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './CreateCharacter.css'
-import './EditCharacter.css'
 
 const CreateCharacter = () => {
 
