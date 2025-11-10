@@ -10,7 +10,7 @@ import '../../App.css';
 const CharacterDesigner = () => {
     const descr = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
 
-  const posts = [
+  const characters = [
       {'id':'1', 
       'title': 'Cartwheel in Chelsea 🤸🏽‍♀️',
       'author':'Harvey Milian', 
@@ -32,11 +32,11 @@ const CharacterDesigner = () => {
   let element = useRoutes([
     {
       path: "",
-      element: <ReadCharacter data={posts} />,
+      element: <ReadCharacter data={characters} />,
     },
     {
       path: "edit/:id",
-      element: <EditCharacter data={posts} />,
+      element: <EditCharacter data={characters} />,
     },
     {
       path: "new",
@@ -51,8 +51,6 @@ const CharacterDesigner = () => {
       <h1>Character Designer</h1>
       <h4>iengrX</h4>
       <div className="header">
-        {/* Use absolute paths for these top-level buttons so they always navigate
-            to the character-designer base and its new page */}
         <Link to="/characterdesigner"><button className="headerBtn"> Explore Challenges 🔍  </button></Link>
         <Link to="/characterdesigner/new"><button className="headerBtn"> Submit Challenge 🏆 </button></Link>
       </div>
