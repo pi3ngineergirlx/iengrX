@@ -20,7 +20,7 @@ const ReadCharacter = (props) => {
                         key={character.id}
                         id={character.id} 
                         name={character.name}
-                        author={character.author}
+                        player={character.player}
                         description={character.description}
                     />
                 ) : <h2>{'No Characters Yet 😞'}</h2>

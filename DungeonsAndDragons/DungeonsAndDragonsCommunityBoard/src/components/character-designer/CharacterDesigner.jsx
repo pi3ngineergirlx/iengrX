@@ -13,19 +13,19 @@ const CharacterDesigner = () => {
   const characters = [
     {'id':'1', 
     'name': 'Cartwheel in Chelsea 🤸🏽‍♀️',
-    'author':'Harvey Milian', 
+    'player':'Harvey Milian', 
     'description': descr},
     {'id':'2', 
     'name': 'Love Lock in Paris 🔒',
-    'author':'Beauford Delaney', 
+    'player':'Beauford Delaney', 
     'description':descr},
     {'id':'3', 
     'name': 'Wear Pink on Fridays 🎀',
-    'author':'Onika Tonya', 
+    'player':'Onika Tonya', 
     'description':descr},
     {'id':'4', 
     'name': 'Adopt a Dog 🐶',
-    'author':'Denise Michelle', 
+    'player':'Denise Michelle', 
     'description':descr},
   ]
 

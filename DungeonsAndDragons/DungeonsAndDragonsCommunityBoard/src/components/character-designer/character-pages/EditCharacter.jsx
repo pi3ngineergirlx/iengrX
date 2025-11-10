@@ -11,7 +11,7 @@ const EditCharacter = ({ data = [] }) => {
 
     const [character, setCharacter] = useState(() => ({
         name: post ? post.name : '',
-        author: post ? post.author : '',
+        player: post ? post.player : '',
         description: post ? post.description : '',
     }))
 
@@ -20,7 +20,7 @@ const EditCharacter = ({ data = [] }) => {
         if (post) {
             setCharacter({
                 name: post.name || '',
-                author: post.author || '',
+                player: post.player || '',
                 description: post.description || '',
             })
         }
@@ -47,8 +47,8 @@ const EditCharacter = ({ data = [] }) => {
                 <input type="text" id="name" name="name" value={character.name} onChange={handleChange} /><br />
                 <br />
 
-                <label htmlFor="author">Author</label><br />
-                <input type="text" id="author" name="author" value={character.author} onChange={handleChange} /><br />
+                <label htmlFor="player">Player</label><br />
+                <input type="text" id="player" name="player" value={character.player} onChange={handleChange} /><br />
                 <br />
 
                 <label htmlFor="description">Description</label><br />

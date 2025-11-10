@@ -22,8 +22,8 @@ const CreateCharacter = () => {
                 <input type="text" id="name" name="name" onChange={handleChange} /><br />
                 <br/>
 
-                <label htmlFor="author">Author</label><br />
-                <input type="text" id="author" name="author" onChange={handleChange} /><br />
+                <label htmlFor="player">Player</label><br />
+                <input type="text" id="player" name="player" onChange={handleChange} /><br />
                 <br/>
 
                 <label htmlFor="description">Description</label><br />
