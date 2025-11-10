@@ -31,17 +31,17 @@ const CharacterDesigner = () => {
 
   let element = useRoutes([
     {
-      path: "/",
-      element:<ReadCharacter data={posts}/>
+      path: "",
+      element: <ReadCharacter data={posts} />,
     },
     {
-      path:"/edit/:id",
-      element: <EditCharacter data={posts} />
+      path: "edit/:id",
+      element: <EditCharacter data={posts} />,
     },
     {
-      path:"/new",
-      element: <CreateCharacter />
-    }
+      path: "new",
+      element: <CreateCharacter />,
+    },
   ]);
 
   return (
@@ -51,8 +51,10 @@ const CharacterDesigner = () => {
       <h1>Character Designer</h1>
       <h4>iengrX</h4>
       <div className="header">
-        <Link to="/"><button className="headerBtn"> Explore Challenges 🔍  </button></Link>
-        <Link to="/new"><button className="headerBtn"> Submit Challenge 🏆 </button></Link>
+        {/* Use absolute paths for these top-level buttons so they always navigate
+            to the character-designer base and its new page */}
+        <Link to="/characterdesigner"><button className="headerBtn"> Explore Challenges 🔍  </button></Link>
+        <Link to="/characterdesigner/new"><button className="headerBtn"> Submit Challenge 🏆 </button></Link>
       </div>
         {element}
     </div>

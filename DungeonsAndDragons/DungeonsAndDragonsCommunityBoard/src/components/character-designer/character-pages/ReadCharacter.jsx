@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Card from '../components/Card'
+import CharacterCard from '../character-components/CharacterCard'
 
 const ReadCharacter = (props) => {
 
@@ -16,7 +16,7 @@ const ReadCharacter = (props) => {
                 [...characters]
                 .sort((a, b) => a.id - b.id)
                 .map((character,index) => 
-                    <Card 
+                    <CharacterCard 
                         key={character.id}
                         id={character.id} 
                         title={character.title}
