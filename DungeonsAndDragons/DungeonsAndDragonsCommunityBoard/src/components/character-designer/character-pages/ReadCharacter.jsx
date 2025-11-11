@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import CharacterCard from '../character-components/CharacterCard'
+import './ReadCharacter.css'
 
 const ReadCharacter = (props) => {
 

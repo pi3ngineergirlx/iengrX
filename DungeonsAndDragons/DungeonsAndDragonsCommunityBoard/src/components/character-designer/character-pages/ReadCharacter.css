@@ -1,6 +1,9 @@
-.ReadCharacters {
+.ReadCharacter {
+    /* grid */
     display: grid;
     grid-auto-flow: row;
     grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
+    /* layout */
+    gap: 20px;
+    padding-bottom: 2rem;
 }

@@ -164,3 +164,27 @@ h5{
   justify-content: center;
   flex-wrap: wrap;
 }
+
+/* CHARACTER DESIGNER */
+/* character buttons */
+.characterBtn {
+   /* layout */
+    padding: 10px;
+    margin: 10px;
+    /* font */
+    font-family: 'Courier New', sans-serif;
+    /* border */
+    border: 1px solid black;
+    border-radius: 10px;
+    /* colors */
+    background-color: black;
+    color: white;
+}
+.characterBtn:hover {
+    /* colors */
+    background-color: white;
+    color:black;
+    /* border */
+    border: 1px solid black;
+    border-radius: 20px;
+}

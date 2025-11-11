@@ -51,8 +51,8 @@ const CharacterDesigner = () => {
       <h1>Character Designer</h1>
       <h4>iengrX</h4>
       <div className="header">
-        <Link to="/characterdesigner"><button className="headerBtn"> Explore Challenges 🔍  </button></Link>
-        <Link to="/characterdesigner/new"><button className="headerBtn"> Submit Challenge 🏆 </button></Link>
+        <Link to="/characterdesigner"><button className="characterBtn"> View Characters </button></Link>
+        <Link to="/characterdesigner/new"><button className="characterBtn"> Create Character </button></Link>
       </div>
         {element}
     </div>
