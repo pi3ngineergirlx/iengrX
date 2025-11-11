@@ -71,7 +71,7 @@ h5{
   right: 10px;
   z-index: 1000;
   /* colors */
-  background-color: white;
+  background-color: black;
   color: black;
   /* border */
   border: 1px solid #000;
@@ -104,8 +104,8 @@ h5{
 /* navbar links hover */
 .nav-link:hover {
   /* colors */
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
   /* font */
   text-decoration: none;
   font-family: 'Courier New', sans-serif;
