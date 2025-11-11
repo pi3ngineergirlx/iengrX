@@ -46,7 +46,7 @@ const EditCharacter = ({ data = [] }) => {
         <div>
             <form onSubmit={handleSubmit}>
                 <div className='basic'>
-                    <h5>Basic Character Information</h5>
+                    <h3>Basic Character Information</h3>
                     <label htmlFor="name">Name</label> <br />
                     <input type="text" id="name" name="name" value={character.name} onChange={handleChange} /><br />
                     <br />
@@ -58,7 +58,7 @@ const EditCharacter = ({ data = [] }) => {
                     <br />
                 </div>
                 <div className='appearance'>
-                    <h5>Character Appearance</h5>
+                    <h3>Character Appearance</h3>
                     <label htmlFor="age">Age</label><br />
                     <input type="text" id="age" name="age" value={character.age} onChange={handleChange} /><br />
                     <br />
@@ -70,7 +70,7 @@ const EditCharacter = ({ data = [] }) => {
                     <br />
                 </div>
                 <div className='attributes'>
-                    <h5>Character Attributes</h5>
+                    <h3>Character Attributes</h3>
                     <label htmlFor="role">Role</label><br />
                     <input type="text" id="role" name="role" value={character.role} onChange={handleChange} /><br />
                     <br />
