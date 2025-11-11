@@ -1,6 +1,6 @@
 /* GLOBAL STYLES */
 html, body, #root {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
 }
 
@@ -11,11 +11,12 @@ html, body, #root {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  min-height: 100%;
+  width: 100%;
   /* font */
   font-family: 'Courier New', sans-serif;
   /* colors */
   color: black;
-  background-color: rgb(209, 255, 163);
 }
 
 /* app */
@@ -26,11 +27,14 @@ html, body, #root {
 
 /* body */
  body {
+  /* layout */
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  /* colors */
+  background-color: rgb(209, 255, 163);
 }
 
 /* headings */
