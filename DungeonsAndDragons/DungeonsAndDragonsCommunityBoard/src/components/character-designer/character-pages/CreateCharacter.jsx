@@ -56,7 +56,29 @@ const CreateCharacter = () => {
                     <input type="text" id="age" name="age" value={character.age} onChange={handleChange} /><br />
                     <br />
                     <label htmlFor="gender">Gender</label><br />
-                    <input type="text" id="gender" name="gender" value={character.gender} onChange={handleChange} /><br />
+                    <div className="alignment-grid" role="group" aria-label="Gender">
+                        {[
+                            ['female','nonbinary','male']
+                        ].map((row, rIdx) => (
+                            <div className="alignment-row" key={rIdx}>
+                                {row.map((label) => {
+                                    const selected = character.gender === label
+                                    return (
+                                        <button
+                                            key={label}
+                                            type="button"
+                                            className={`alignment-cell ${selected ? 'is-selected' : ''}`}
+                                            aria-pressed={selected}
+                                            onClick={() => setCharacter(prev => ({ ...prev, gender: label }))}
+                                        >
+                                            {label}
+                                        </button>
+                                    )
+                                })}
+                            </div>
+                        ))}
+                    </div>
+                    <br />
                     <br />
                     <label htmlFor="species">Species</label><br />
                     <input type="text" id="species" name="species" value={character.species} onChange={handleChange} /><br />

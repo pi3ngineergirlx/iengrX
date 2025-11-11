@@ -12,20 +12,20 @@ const CharacterDesigner = () => {
 
   const characters = [
     {'id':'1', 
-    'name': 'Cartwheel in Chelsea 🤸🏽‍♀️',
-    'player':'Harvey Milian', 
+    'name': 'Character 1',
+    'player':'Player 1', 
     'description': descr},
     {'id':'2', 
-    'name': 'Love Lock in Paris 🔒',
-    'player':'Beauford Delaney', 
+    'name': 'Character 2',
+    'player':'Player 2', 
     'description':descr},
     {'id':'3', 
-    'name': 'Wear Pink on Fridays 🎀',
-    'player':'Onika Tonya', 
+    'name': 'Character 3',
+    'player':'Player 3', 
     'description':descr},
     {'id':'4', 
-    'name': 'Adopt a Dog 🐶',
-    'player':'Denise Michelle', 
+    'name': 'Character 4',
+    'player':'Player 4', 
     'description':descr},
   ]
 
