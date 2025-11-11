@@ -80,6 +80,31 @@ const EditCharacter = ({ data = [], refresh } ) => {
         navigate('/characterdesigner')
     }
 
+    const deleteCharacter = async () => {
+        const confirm = window.confirm('Are you sure you want to delete this character? This action cannot be undone.')
+        if (!confirm) return
+
+        try {
+            const { data: deleted, error } = await supabase
+                .from('characters')
+                .delete()
+                .eq('id', characterRecord.id)
+                .select()
+
+            if (error) {
+                console.error('Failed to delete character', error)
+                alert('Failed to delete: ' + error.message)
+                return
+            }
+
+            console.log('Deleted character', deleted)
+            if (typeof refresh === 'function') await refresh()
+            navigate('/characterdesigner')
+        } catch (err) {
+            console.error('Failed to delete', err)
+        }
+    }
+
     if (!characterRecord) return <div><h2>Character not found</h2></div>
 
     return (
@@ -174,7 +199,7 @@ const EditCharacter = ({ data = [], refresh } ) => {
                 </div>
                 <div className='submit-delete-buttons'>
                     <input type="submit" value="Submit" />
-                    <button type="button" className="deleteButton">Delete</button>
+                    <button type="button" className="deleteButton" onClick={deleteCharacter}>Delete</button>
                 </div>
             </form>
         </div>
