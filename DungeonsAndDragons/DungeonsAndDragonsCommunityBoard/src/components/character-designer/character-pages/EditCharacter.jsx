@@ -1,48 +1,86 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { supabase } from '../../../client.js'
 import './EditCharacter.css'
 
-const EditCharacter = ({ data = [] }) => {
+const EditCharacter = ({ data = [], refresh } ) => {
     const { id } = useParams()
     const navigate = useNavigate()
 
-    // Find the post by id from passed-in data (ids are strings in sample data)
-    const post = data && data.length ? data.find((p) => String(p.id) === String(id)) : null
+    // Find the character record by id from passed-in data (ids are strings in sample data)
+    const characterRecord = data && data.length ? data.find((p) => String(p.id) === String(id)) : null
 
     const [character, setCharacter] = useState(() => ({
-        name: post ? post.name : '',
-        player: post ? post.player : '',
-        description: post ? post.description : '',
-        gender: post ? post.gender || '' : '',
-        alignment: post ? post.alignment || '' : '',
+        name: characterRecord ? characterRecord.name : '',
+        player: characterRecord ? characterRecord.player : '',
+        description: characterRecord ? characterRecord.description : '',
+        species: characterRecord ? characterRecord.species || '' : '',
+        role: characterRecord ? characterRecord.role || '' : '',
+        level: characterRecord ? characterRecord.level || '' : '',
+        alignment: characterRecord ? characterRecord.alignment || '' : '',
+        abilities: characterRecord ? characterRecord.abilities || '' : '',
+        equipment: characterRecord ? characterRecord.equipment || '' : '',
     }))
 
-    // If post changes (data arrives), sync into local state
     useEffect(() => {
-        if (post) {
+        if (characterRecord) {
             setCharacter({
-                name: post.name || '',
-                player: post.player || '',
-                gender: post.gender || '',
-                description: post.description || '',
-                alignment: post.alignment || '',
+                name: characterRecord.name || '',
+                player: characterRecord.player || '',
+                description: characterRecord.description || '',
+                age: characterRecord.age || '',
+                gender: characterRecord.gender || '',
+                species: characterRecord.species || '',
+                role: characterRecord.role || '',
+                level: characterRecord.level || '',
+                alignment: characterRecord.alignment || '',
+                abilities: characterRecord.abilities || '',
+                equipment: characterRecord.equipment || '',
             })
         }
-    }, [post])
+    }, [characterRecord])
 
     const handleChange = (event) => {
         const { name, value } = event.target
         setCharacter((prev) => ({ ...prev, [name]: value }))
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        // For now just log and navigate back to list; saving would require lifting state
-        console.log('Saving character', character)
+        try {
+            const { data: updated, error } = await supabase
+                .from('characters')
+                .update({
+                    name: character.name,
+                    player: character.player,
+                    description: character.description,
+                    age: character.age,
+                    gender: character.gender,
+                    species: character.species,
+                    role: character.role,
+                    level: character.level,
+                    alignment: character.alignment,
+                    abilities: character.abilities,
+                    equipment: character.equipment,
+                })
+                .eq('id', characterRecord.id)
+                .select()
+
+            if (error) {
+                console.error('Failed to update character', error)
+                alert('Failed to save: ' + error.message)
+                return
+            }
+
+            console.log('Updated character', updated)
+            if (typeof refresh === 'function') await refresh()
+        } catch (err) {
+            console.error('Failed to save', err)
+        }
         navigate('/characterdesigner')
     }
 
-    if (!post) return <div><h2>Character not found</h2></div>
+    if (!characterRecord) return <div><h2>Character not found</h2></div>
 
     return (
         <div>
@@ -67,7 +105,7 @@ const EditCharacter = ({ data = [] }) => {
                     <label htmlFor="gender">Gender</label><br />
                     <div className="alignment-grid" role="group" aria-label="Gender">
                         {[
-                            ['Female','Non-binary','Male']
+                            ['female','nonbinary','male']
                         ].map((row, rIdx) => (
                             <div className="alignment-row" key={rIdx}>
                                 {row.map((label) => {

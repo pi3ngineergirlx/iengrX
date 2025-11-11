@@ -31,13 +31,36 @@ const CreateCharacter = ({ refresh } = {}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await supabase
-        .from('characters')
-            .insert({ title: character.name, author: character.player, description: character.description })
+        // debug payload
+        console.log('Create payload:', character)
+        const { data, error } = await supabase
+            .from('characters')
+            .insert([
+                {
+                    name: character.name,
+                    player: character.player,
+                    description: character.description,
+                    age: character.age,
+                    gender: character.gender,
+                    species: character.species,
+                    role: character.role,
+                    level: character.level,
+                    alignment: character.alignment,
+                    abilities: character.abilities,
+                    equipment: character.equipment,
+                }
+            ])
             .select()
-        window.location = "/";
-        // log and navigate back to list; saving requires Supabase integration
-        console.log('Creating character', character)
+
+        if (error) {
+            console.error('Error inserting character', error)
+            alert('Failed to create character: ' + error.message)
+            return
+        }
+
+        console.log('Created character', data)
+        // call optional refresh passed from parent to reload the list
+        if (typeof refresh === 'function') await refresh()
         navigate('/characterdesigner')
     }
 
@@ -132,7 +155,7 @@ const CreateCharacter = ({ refresh } = {}) => {
                     <br />
                 </div>
                 <div className='submit-delete-buttons'>
-                    <input type="submit" value="Create" onClick={CreateCharacter}/>
+                    <button type="submit">Create</button>
                 </div>
             </form>
         </div>
