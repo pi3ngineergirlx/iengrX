@@ -1,63 +1,60 @@
-import React from 'react';
-import { useRoutes } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import Navbar from '../Navbar';
+import React, { useState, useEffect } from 'react'
+import { useRoutes, Link } from 'react-router-dom'
+import Navbar from '../Navbar'
 import ReadCharacter from './character-pages/ReadCharacter'
 import CreateCharacter from './character-pages/CreateCharacter'
 import EditCharacter from './character-pages/EditCharacter'
-import '../../App.css';
+import { supabase } from '../../client.js'
+import '../../App.css'
 
 const CharacterDesigner = () => {
-    const descr = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
+  const [characters, setCharacters] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const characters = [
-    {'id':'1', 
-    'name': 'Character 1',
-    'player':'Player 1', 
-    'description': descr},
-    {'id':'2', 
-    'name': 'Character 2',
-    'player':'Player 2', 
-    'description':descr},
-    {'id':'3', 
-    'name': 'Character 3',
-    'player':'Player 3', 
-    'description':descr},
-    {'id':'4', 
-    'name': 'Character 4',
-    'player':'Player 4', 
-    'description':descr},
-  ]
+  const fetchCharacters = async () => {
+    setLoading(true)
+    const { data, error } = await supabase
+      .from('characters')
+      .select('*')
+      .order('created_at', { ascending: false })
 
-  let element = useRoutes([
-    {
-      path: "",
-      element: <ReadCharacter data={characters} />,
-    },
-    {
-      path: "edit/:id",
-      element: <EditCharacter data={characters} />,
-    },
-    {
-      path: "new",
-      element: <CreateCharacter />,
-    },
-  ]);
+    if (error) {
+      console.error('Failed to fetch characters', error)
+      setCharacters([])
+    } else {
+      setCharacters(data || [])
+    }
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    fetchCharacters()
+  }, [])
+
+  const element = useRoutes([
+    { path: '', element: <ReadCharacter data={characters} loading={loading} /> },
+    { path: 'edit/:id', element: <EditCharacter data={characters} refresh={fetchCharacters} /> },
+    { path: 'new', element: <CreateCharacter refresh={fetchCharacters} /> },
+  ])
 
   return (
     <>
-    <Navbar />
-    <div className='CharacterDesigner'>
-      <h1>Character Designer</h1>
-      <h4>iengrX</h4>
-      <div className="header">
-        <Link to="/characterdesigner"><button className="characterBtn"> View Characters </button></Link>
-        <Link to="/characterdesigner/new"><button className="characterBtn"> Create Character </button></Link>
-      </div>
+      <Navbar />
+      <div className='CharacterDesigner'>
+        <h1>Character Designer</h1>
+        <h4>iengrX</h4>
+        <div className='header'>
+          <Link to='/characterdesigner'>
+            <button className='characterBtn'> View Characters </button>
+          </Link>
+          <Link to='/characterdesigner/new'>
+            <button className='characterBtn'> Create Character </button>
+          </Link>
+        </div>
         {element}
-    </div>
+      </div>
     </>
   )
 }
 
-export default CharacterDesigner;
+export default CharacterDesigner

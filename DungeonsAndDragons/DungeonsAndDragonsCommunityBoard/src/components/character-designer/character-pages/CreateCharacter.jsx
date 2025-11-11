@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { supabase } from '../../../client.js'
 import './CreateCharacter.css'
 
-const CreateCharacter = () => {
+const CreateCharacter = ({ refresh } = {}) => {
 
     const navigate = useNavigate()
 
@@ -28,9 +29,14 @@ const CreateCharacter = () => {
         }))
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        // For now just log and navigate back to list; saving would require Supabase integration
+        await supabase
+        .from('characters')
+            .insert({ title: character.name, author: character.player, description: character.description })
+            .select()
+        window.location = "/";
+        // log and navigate back to list; saving requires Supabase integration
         console.log('Creating character', character)
         navigate('/characterdesigner')
     }
@@ -126,7 +132,7 @@ const CreateCharacter = () => {
                     <br />
                 </div>
                 <div className='submit-delete-buttons'>
-                    <input type="submit" value="Create" />
+                    <input type="submit" value="Create" onClick={CreateCharacter}/>
                 </div>
             </form>
         </div>
