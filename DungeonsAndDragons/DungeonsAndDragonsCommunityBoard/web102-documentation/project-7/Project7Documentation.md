@@ -1,10 +1,10 @@
-# Web Development Project 7 - *Name of App Here*
+# Web Development Project 7 - *Sci-Fi Dungeons and Dragons Character Designer*
 
-Submitted by: **Your Name Here**
+Submitted by: **Soma Hebbare**
 
-This web app: **insert description**
+This web app: **allows users to create, edit, view, and delete characters to be utilized in science fiction themed Dungeons & Dragons games, with the create and edit forms allowing users to define and select attributes including, but not limited to, alignment, appearance, species, abilities, and the Dungeons & Dragons player that creates and will be playing as the character.**
 
-Time spent: **X** hours spent in total
+Time spent: **8** hours spent in total
 
 ## Required Features
 
@@ -52,7 +52,7 @@ Here's a walkthrough of implemented user stories:
 <img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
-GIF created with ...  
+GIF created with Kap  
 <!-- Recommended tools:
 [Kap](https://getkap.co/) for macOS
 [ScreenToGif](https://www.screentogif.com/) for Windows
@@ -64,7 +64,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2025] [Soma Hebbar]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
