@@ -1,13 +1,83 @@
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../client.js'
-import 'Posts.css'
+import './Posts.css'
 
-const PostOverview = () => {
+// shows a compact summary of a post for lists
+// Props:
+// - post: object with at least { id, title, display_name, username, avatar_url, created_at (or timestamp), likes_count }
+// - showViewButton: optional boolean (default true)
+const PostOverview = ({ post, showViewButton = true }) => {
+  const navigate = useNavigate()
+  const [likesCount, setLikesCount] = useState(post?.likes_count ?? post?.likes ?? 0)
+
+  useEffect(() => {
+    let mounted = true
+    // if likes count not present on the post, fetch it
+    async function fetchLikes() {
+      if (!post?.id) return
+      if (post?.likes_count != null || post?.likes != null) return
+      try {
+        const { data, error } = await supabase.from('post_likes').select('user_id').eq('post_id', post.id)
+        if (error) throw error
+        if (mounted) setLikesCount(data?.length ?? 0)
+      } catch (err) {
+        // ignore errors here; keep likesCount at 0
+        // eslint-disable-next-line no-console
+        console.error('Failed to load likes for post', err)
+      }
+    }
+    fetchLikes()
+    return () => { mounted = false }
+  }, [post])
+
+  if (!post) return null
+
+  const avatar = post.avatar_url || post.userpfp || '/avatar-fallback.png'
+  const displayName = post.display_name || post.userDisplayName || post.author || 'Unknown'
+  const username = post.username || post.user_name || ''
+  const created = post.created_at || post.timestamp || postInfoTimestampSafe(post)
+
+  function postInfoTimestampSafe(p) {
+    // fallback helper in case no timestamp fields
+    return new Date().toISOString()
+  }
+
+  function elapsed(ts) {
+    const t = Date.parse(ts)
+    if (Number.isNaN(t)) return ''
+    const diff = Date.now() - t
+    const seconds = Math.floor(diff / 1000)
+    if (seconds < 60) return `${seconds}s`
+    const minutes = Math.floor(seconds / 60)
+    if (minutes < 60) return `${minutes}m`
+    const hours = Math.floor(minutes / 60)
+    if (hours < 24) return `${hours}h`
+    const days = Math.floor(hours / 24)
+    return `${days}d`
+  }
+
   return (
-    <>
-    </>
+    <div className="post-overview">
+      <img className="post-overview-avatar" src={avatar} alt={displayName} />
+      <div className="post-overview-body">
+        <div className="post-overview-top">
+          <strong className="post-overview-title">{post.title || '(no title)'}</strong>
+          <span className="post-overview-time">{elapsed(created)}</span>
+        </div>
+        <div className="post-overview-meta">
+          <span className="post-overview-author">{displayName}</span>
+          {username && <span className="post-overview-username">@{username}</span>}
+          <span className="post-overview__likes">❤️ {likesCount}</span>
+        </div>
+      </div>
+      {showViewButton && (
+        <div className="post-overview__actions">
+          <button onClick={() => navigate(`/posts/${post.id}`)}>View</button>
+        </div>
+      )}
+    </div>
   )
 }
 
-export default PostOverview;
+export default PostOverview
