@@ -89,10 +89,10 @@ const CreatePost = ({ threadId = null, refresh } = {}) => {
         </div>
 
         <label htmlFor="title"> Post Title </label>
-        <input id="title" name="title" value={form.title} onChange={handleChange} />
+        <input id="title" name="title" value={postInfo.title} onChange={handleChange} />
 
         <label htmlFor="text">Text</label>
-        <textarea id="text" name="text" rows={6} value={form.text} onChange={handleChange} />
+        <textarea id="text" name="text" rows={6} value={postInfo.text} onChange={handleChange} />
 
         <label htmlFor="image">Image (optional)</label>
         <input id="image" name="image" type="file" accept="image/*" onChange={handleFileChange} />
