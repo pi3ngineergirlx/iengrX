@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useRoutes, Link } from 'react-router-dom'
-import Navbar from '../Navbar'
 import ReadCharacter from './character-pages/ReadCharacter'
 import CreateCharacter from './character-pages/CreateCharacter'
 import EditCharacter from './character-pages/EditCharacter'
@@ -39,7 +38,6 @@ const CharacterDesigner = () => {
 
   return (
     <>
-      <Navbar />
       <div className='CharacterDesigner'>
         <h1>Character Designer</h1>
         <h4>iengrX</h4>
