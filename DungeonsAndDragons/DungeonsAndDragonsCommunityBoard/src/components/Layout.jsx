@@ -1,11 +1,11 @@
 import React from 'react'
 import { Outlet, Link } from 'react-router-dom'
 
-// Inline navbar markup so Layout owns the navbar and Navbar.jsx can be removed.
 export default function Layout() {
   const links = [
     { to: '/', label: 'Home' },
-    { to: '/characterdesigner', label: 'Character Designer' }
+    { to: '/characterdesigner', label: 'Character Designer' },
+    { to: '/posts', label: 'Discussion Forum' }
   ]
 
   return (
