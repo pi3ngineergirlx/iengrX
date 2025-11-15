@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../client.js'
 import PostOverview from './PostOverview.jsx'
+import '../../App.css'
 import './Posts.css'
 
 const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
@@ -66,6 +67,15 @@ const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
   return (
     <div className='posts-grid'>
       <h1>Story Plot Discussion Forum</h1>
+      <div className='discussion-description'>
+        <p>
+            Discuss your ideas for story plots focusing on biological,
+            technological, apocalyptic, societal, and space exploration
+            themes! Share your concepts, obtain feedback, and collaborate
+            with fellow Dungeons and Dragons enthusiasts to create
+            captivating narratives set in futuristic and imaginative worlds.
+        </p>
+      </div>
       {error && posts.length > 0 && (
         <div className="error-message">{error}</div>
       )}
