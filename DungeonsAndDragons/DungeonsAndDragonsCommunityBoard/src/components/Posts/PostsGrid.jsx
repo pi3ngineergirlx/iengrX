@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { supabase } from '../../client.js'
 import PostOverview from './PostOverview.jsx'
 import '../../App.css'
@@ -75,6 +76,14 @@ const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
             with fellow Dungeons and Dragons enthusiasts to create
             captivating narratives set in futuristic and imaginative worlds.
         </p>
+      </div>
+      <div className='post-buttons'>
+        <Link to='/posts'>
+          <button className='postBtn'> View All Posts </button>
+        </Link>
+        <Link to='/posts/new'>
+            <button className='postBtn'> Create Post </button>
+        </Link>
       </div>
       {error && posts.length > 0 && (
         <div className="error-message">{error}</div>
