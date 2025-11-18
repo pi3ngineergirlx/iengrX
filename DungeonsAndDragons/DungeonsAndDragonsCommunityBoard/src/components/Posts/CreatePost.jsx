@@ -88,14 +88,17 @@ const CreatePost = ({ threadId = null, refresh } = {}) => {
           </div>
         </div>
 
-        <label htmlFor="title"> Post Title </label>
-        <input id="title" name="title" value={postInfo.title} onChange={handleChange} />
+        <div className='post-details'>
+          <h3> Post Details </h3>
+          <label htmlFor="title"> Post Title </label>
+          <input id="title" name="title" value={postInfo.title} onChange={handleChange} />
 
-        <label htmlFor="text">Text</label>
-        <textarea id="text" name="text" rows={6} value={postInfo.text} onChange={handleChange} />
+          <label htmlFor="text">Text</label>
+          <textarea id="text" name="text" rows={6} value={postInfo.text} onChange={handleChange} />
 
-        <label htmlFor="image">Image (optional)</label>
+          <label htmlFor="image"> Upload Image (optional)</label>
         <input id="image" name="image" type="file" accept="image/*" onChange={handleFileChange} />
+        </div>
 
         {error && <div className="form-error">{error}</div>}
 
