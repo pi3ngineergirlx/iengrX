@@ -32,10 +32,8 @@ const CreatePost = ({ threadId = null, refresh } = {}) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError(null)
-    if (!user) {
-      navigate('/login')
-      return
-    }
+
+    // allow anonymous posting: don't require user to be signed in
 
     if (!postInfo.text?.trim() && !postInfo.title?.trim()) {
       setError('Please enter a title or some content.')
@@ -47,19 +45,23 @@ const CreatePost = ({ threadId = null, refresh } = {}) => {
       let image_url = null
       if (postInfo.image) {
         const file = postInfo.image
-        const filePath = `${user.id}/${Date.now()}-${file.name}`
-        const { error: uploadError } = await supabase.storage.from('post-images').upload(filePath, file)
+        // store uploads under the user's folder when available, otherwise use 'anon'
+        const ownerFolder = user?.id ?? 'anon'
+        const filePath = `${ownerFolder}/${Date.now()}-${file.name}`
+        const { error: uploadError } = await supabase.storage.from('image_url').upload(filePath, file)
         if (uploadError) throw uploadError
-        const publicObj = supabase.storage.from('post-images').getPublicUrl(filePath)
+        const publicObj = supabase.storage.from('image_url').getPublicUrl(filePath)
         image_url = publicObj?.publicURL || publicObj?.data?.publicUrl || null
       }
 
       const payload = {
         thread_id: threadId,
-        user_id: user.id,
+        // user_id may be null for anonymous posts
+        user_id: user?.id ?? null,
         title: postInfo.title || null,
         content: postInfo.text,
         image_url,
+        // snapshot profile info when available
         display_name: profile?.display_name ?? null,
         avatar_url: profile?.avatar_url ?? null
       }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { supabase } from '../../../client.js'
+import { supabase } from '../../client.js'
 import { useAuth } from '../../hooks/useAuth'
 import './Posts.css'
 
