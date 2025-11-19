@@ -48,26 +48,37 @@ const PostDetailView = ({ refresh } = {}) => {
         setLoading(false)
         return
       }
-      setPostInfo(post)
-      setEditState({ title: post.title || '', text: post.content || '', image: null })
+  setPostInfo(post)
+  setEditState({ title: post.title || '', text: post.content || '', image: null })
+  // comments are stored as a JSONB array on the post row (posts.comments)
+  setComments(post.comments || [])
 
-      // fetch likes (get count and whether current user liked)
-      const { data: likesData, error: likesErr } = await supabase
-        .from('post_likes')
-        .select('user_id')
-        .eq('post_id', postId)
-      if (likesErr) throw likesErr
-      setLikesCount(likesData?.length ?? 0)
-      setLikedByMe(Boolean(user && likesData?.some(l => l.user_id === user.id)))
+  // fetch likes (get count and whether current user liked)
+        try {
+          const { data: likesData, error: likesErr } = await supabase
+            .from('post_likes')
+            .select('user_id')
+            .eq('post_id', postId)
+          if (likesErr) {
+            // If post_likes table is missing or another error occurs, don't fail the whole view.
+            // Fallback to the denormalized `likes` column on the post when available.
+            // eslint-disable-next-line no-console
+            console.warn('Could not load post_likes:', likesErr.message || likesErr)
+            setLikesCount(post?.likes ?? 0)
+            setLikedByMe(false)
+          } else {
+            setLikesCount(likesData?.length ?? (post?.likes ?? 0))
+            setLikedByMe(Boolean(user && likesData?.some(l => l.user_id === user.id)))
+          }
+        } catch (likesErr) {
+          // Defensive: any unexpected error shouldn't block the entire page.
+          // eslint-disable-next-line no-console
+          console.warn('Error fetching likes:', likesErr)
+          setLikesCount(post?.likes ?? 0)
+          setLikedByMe(false)
+        }
 
-      // fetch comments
-      const { data: commentsData, error: commentsErr } = await supabase
-        .from('comments')
-        .select('*')
-        .eq('post_id', postId)
-        .order('created_at', { ascending: true })
-      if (commentsErr) throw commentsErr
-      setComments(commentsData || [])
+      // comments are already populated from the post row (see above). No separate table query.
 
     } catch (err) {
       console.error('Load post error', err)
@@ -154,28 +165,38 @@ const PostDetailView = ({ refresh } = {}) => {
 
   const submitComment = async (e) => {
     e.preventDefault()
-    if (!user) {
-      navigate('/login')
-      return
-    }
+    // Allow anonymous comments: user may be null. Store user_id when available,
+    // otherwise insert a comment with user_id = null and a snapshot display name.
     if (!newComment?.trim()) return
     setBusy(true)
     try {
-      const payload = {
+      // Build a new comment object and append it to the post.comments JSONB array.
+      const newCommentObj = {
+        id: (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : `${Date.now()}-${Math.floor(Math.random()*100000)}`,
         post_id: postId,
-        user_id: user.id,
+        user_id: user?.id ?? null,
         content: newComment,
-        display_name: profile?.display_name ?? null,
-        avatar_url: profile?.avatar_url ?? null
+        display_name: profile?.display_name ?? (user?.email ? user.email.split('@')[0] : 'Anonymous'),
+        avatar_url: profile?.avatar_url ?? null,
+        created_at: new Date().toISOString()
       }
-      const { data, error } = await supabase.from('comments').insert([payload]).select().single()
-      if (error) throw error
-      setComments(prev => [...prev, data])
+
+      // Create the new array locally and send the full array to Supabase to update the post row.
+      const newComments = [...(comments || []), newCommentObj]
+
+  // Use explicit select and tolerate either an array result or an object.
+  const { data, error } = await supabase.from('posts').update({ comments: newComments }).eq('id', postId).select('*')
+  if (error) throw error
+  const updatedPost = Array.isArray(data) ? data[0] : data
+  // update local state with the returned comments array (or fallback)
+  setComments(updatedPost?.comments ?? newComments)
       setNewComment('')
       if (typeof refresh === 'function') await refresh()
     } catch (err) {
       console.error('Submit comment error', err)
-      setError(err?.message || String(err))
+      // If the DB rejects anonymous inserts due to RLS, show a gentle message
+      // and don't crash the page.
+      setError(err?.message || String(err) || 'Could not post comment')
     } finally {
       setBusy(false)
     }
@@ -239,7 +260,7 @@ const PostDetailView = ({ refresh } = {}) => {
         </ul>
 
         <form onSubmit={submitComment} className="new-comment-form">
-          <textarea value={newComment} onChange={(e) => setNewComment(e.target.value)} placeholder="Write a comment..." />
+          <textarea value={newComment} onChange={(e) => setNewComment(e.target.value)} placeholder="Write a comment (login optional)..." />
           <div className="submit-delete-buttons">
             <button type="submit" disabled={busy || !newComment.trim()}>{busy ? 'Posting...' : 'Post Comment'}</button>
           </div>
