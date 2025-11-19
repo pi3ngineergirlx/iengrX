@@ -55,6 +55,53 @@
     align-items: center;
 }
 
+/* total + sort buttons */
+/* basic */
+.total-sort-buttons {
+    /* flexbox */
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 1200px;
+    justify-content: space-between;
+    align-items: center;
+}
+/* left */
+.total-sort-buttons-left {
+    /* flexbox */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.postCountBox {
+    /* layout */
+    padding: 10px;
+    margin: 10px;
+    /* font */
+    font-family: 'Courier New', sans-serif;
+    font-size: 18px;
+    /* border */
+    border: 1px solid black;
+    border-radius: 10px;
+    /* colors */
+    background-color: white;
+    color: black;
+    /* prevent hover/pointer behaviour */
+    cursor: default;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+}
+/* right */
+.total-sort-buttons-right {
+    /* flexbox */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
 /* CREATE POST FORM */
 /* inputs */
 input {

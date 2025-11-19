@@ -18,6 +18,8 @@ const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
 })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [totalCount, setTotalCount] = useState(null)
+  const [sortMode, setSortMode] = useState('latest')
 
   useEffect(() => {
     let mounted = true
@@ -38,6 +40,8 @@ const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
         if (mounted) {
           setPosts(data || [])
           setLoading(false)
+          // If we got data back, set a quick local total while the exact DB count is fetched
+          if (data) setTotalCount(data.length)
         }
       } catch (err) {
         if (mounted) {
@@ -49,6 +53,24 @@ const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
     }
 
     fetchPosts()
+    // fetch a server-side total count (respects any filters)
+    async function fetchTotalCount() {
+      try {
+        let countQuery = supabase.from('posts').select('*', { head: true, count: 'exact' })
+        if (threadId) countQuery = countQuery.eq('thread_id', threadId)
+        if (category) countQuery = countQuery.eq('category', category)
+        const { count, error: countError } = await countQuery
+        if (countError) throw countError
+        if (mounted) setTotalCount(count ?? 0)
+      } catch (err) {
+        // keep the local count if server count fails
+        if (mounted) {
+          // leave totalCount as-is (may be set from fetchPosts) or null
+        }
+      }
+    }
+
+    fetchTotalCount()
 
     return () => { mounted = false }
   }, [threadId, category, refresh])
@@ -61,9 +83,24 @@ const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
   // even when there are no posts. Inside the container, show either the
   // posts list or a friendly empty state. If an error occurs but posts exist,
   // show an error banner above the list.
-  const content = posts.length === 0
+  // Prepare the posts to display: always render the posts container so the
+  // header and controls remain visible even when there are no posts. Apply
+  // the selected sort (latest or top) to the client-side list before
+  // rendering. If there are no posts, show a friendly empty state.
+  const getSortedPosts = (list, mode) => {
+    const copy = (list || []).slice()
+    if (mode === 'latest') {
+      copy.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    } else if (mode === 'top') {
+      copy.sort((a, b) => (b.likes || 0) - (a.likes || 0))
+    }
+    return copy
+  }
+
+  const displayedPosts = getSortedPosts(posts, sortMode)
+  const content = displayedPosts.length === 0
     ? <div className="empty">no posts yet</div>
-    : posts.map((post) => <PostOverview key={post.id} post={post} />)
+    : displayedPosts.map((post) => <PostOverview key={post.id} post={post} />)
 
   return (
     <div className='posts-grid'>
@@ -84,6 +121,29 @@ const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
         <Link to='/posts/new'>
             <button className='postBtn'> Create Post </button>
         </Link>
+      </div>
+      <div className='total-sort-buttons'>
+        <div className='total-sort-buttons-left'>
+          <div className='postCountBox' role='status' aria-label='total-posts'>
+            {totalCount !== null ? totalCount : posts.length} posts
+          </div>
+        </div>
+        <div className='total-sort-buttons-right'>
+          <button
+            className={`postBtn ${sortMode === 'latest' ? 'active' : ''}`}
+            onClick={() => setSortMode('latest')}
+            aria-pressed={sortMode === 'latest'}
+          >
+            latest
+          </button>
+          <button
+            className={`postBtn ${sortMode === 'top' ? 'active' : ''}`}
+            onClick={() => setSortMode('top')}
+            aria-pressed={sortMode === 'top'}
+          >
+            top
+          </button>
+        </div>
       </div>
       {error && posts.length > 0 && (
         <div className="error-message">{error}</div>
