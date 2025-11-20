@@ -59,23 +59,29 @@ const PostOverview = ({ post, showViewButton = true }) => {
 
   return (
     <div className="post-overview">
-      <img className="post-overview-avatar" src={avatar} alt={displayName} />
-      <div className="post-overview-body">
-        <div className="post-overview-top">
-          <strong className="post-overview-title">{post.title || '(no title)'}</strong>
+      <div className="post-overview-top">
+        <div className='overview-user-info'>
+          <div className='overview-user-avatar'>
+            <img src={avatar} alt={displayName} />
+          </div>
+          <div className='overview-user-names'>
+            <span className="post-overview-author">{displayName}</span>
+            {username && <span className="post-overview-username">@{username}</span>}
+          </div>
+        </div>
+        <div className='overview-timestamp'>
           <span className="post-overview-time">{elapsed(created)}</span>
         </div>
-        <div className="post-overview-meta">
-          <span className="post-overview-author">{displayName}</span>
-          {username && <span className="post-overview-username">@{username}</span>}
-          <span className="post-overview__likes">❤️ {likesCount}</span>
-        </div>
       </div>
-      {showViewButton && (
-        <div className="post-overview__actions">
-          <button onClick={() => navigate(`/posts/${post.id}`)}>View</button>
+      <h3 className="post-overview-title">{post.title || '(no title)'}</h3>
+      <div className='post-overview-bottom'>
+        <span className="post-overview-likes">❤️ {likesCount} likes</span>
+        {showViewButton && (
+        <div className="post-overview-view-button">
+          <button onClick={() => navigate(`/posts/${post.id}`)}>view post details</button>
         </div>
       )}
+      </div>
     </div>
   )
 }

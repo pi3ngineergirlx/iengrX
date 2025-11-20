@@ -102,6 +102,111 @@
     align-items: center;
 }
 
+/* POST OVERVIEW */
+/* single post item */
+.post-overview {
+    /* layout */
+    padding: 10px;
+    margin: 10px;
+    /* colors */
+    background-color: chartreuse;
+    color: black;
+    /* border */
+    border: 1px solid black;
+    border-radius: 10px;
+    /* flexbox */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+/* post overview top */
+.post-overview-top {
+    /* layout */
+    padding: 10px;
+    /* flexbox */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.overview-user-info {
+    /* layout */
+    padding: 10px;
+    margin: 10px;
+    /* colors */
+    background-color: white;
+    color: black;
+    /* border */
+    border: 1px solid black;
+    border-radius: 10px;
+    /* flexbox */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.overview-user-names {
+    /* flexbox */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+}
+.overview-timestamp {
+    /* layout */
+    padding: 10px;
+    margin: 10px;
+    /* colors */
+    background-color: white;
+    color: black;
+    /* border */
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+/* post overview bottom */
+.post-overview-bottom {
+    /* layout */
+    padding: 10px;
+    /* flexbox */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.post-overview-likes {
+    /* layout */
+    padding: 10px;
+    margin: 10px;
+    /* border */
+    border: 1px solid black;
+    border-radius: 10px;
+    /* colors */
+    background-color: white;
+    color: black;
+}
+.post-overview-view-button button {
+    /* layout */
+    padding: 10px;
+    margin: 10px;
+    /* colors */
+    background-color: black;
+    color: white;
+    /* border */
+    border: 1px solid black;
+    border-radius: 10px;
+}
+.post-overview-view-button button:hover {
+    /* colors */
+    background-color: white;
+    color: black;
+    /* border */
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
 /* CREATE POST FORM */
 /* inputs */
 input {

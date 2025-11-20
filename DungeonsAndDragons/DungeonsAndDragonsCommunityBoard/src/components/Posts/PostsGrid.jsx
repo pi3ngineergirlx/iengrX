@@ -99,8 +99,16 @@ const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
 
   const displayedPosts = getSortedPosts(posts, sortMode)
   const content = displayedPosts.length === 0
-    ? <div className="empty">no posts yet</div>
-    : displayedPosts.map((post) => <PostOverview key={post.id} post={post} />)
+  ? <div className="empty">no posts yet</div>
+  : displayedPosts.map((post, idx) => (
+      <div
+        key={post.id}
+        className={`post-item ${post.category ?? ''}`}
+        data-index={idx}
+      >
+        <PostOverview post={post} />
+      </div>
+    ))
 
   return (
     <div className='posts-grid'>
