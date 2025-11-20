@@ -7,17 +7,9 @@ import './Posts.css'
 
 const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
   const [posts, setPosts] = useState([])
-  const [filteredPosts, setFilteredPosts] = useState([])
-  const [filters, setFilters] = useState({
-    storyType: '',
-    type: '',
-    likesMin: '',
-    likesMax: '',
-    timestampMin: '',
-    timestampMax: ''
-})
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [searchInput, setSearchInput] = useState('')
   const [totalCount, setTotalCount] = useState(null)
   const [sortMode, setSortMode] = useState('latest')
 
@@ -45,7 +37,11 @@ const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
         }
       } catch (err) {
         if (mounted) {
-          setError(null)
+          // surface an error message so the UI can show it if needed
+          // (keep posts empty so fallback/empty state renders)
+          // eslint-disable-next-line no-console
+          console.error('fetchPosts error', err)
+          setError(err?.message || String(err))
           setPosts([])
           setLoading(false)
         }
@@ -64,6 +60,8 @@ const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
         if (mounted) setTotalCount(count ?? 0)
       } catch (err) {
         // keep the local count if server count fails
+        // eslint-disable-next-line no-console
+        console.warn('fetchTotalCount error', err)
         if (mounted) {
           // leave totalCount as-is (may be set from fetchPosts) or null
         }
@@ -97,18 +95,26 @@ const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
     return copy
   }
 
-  const displayedPosts = getSortedPosts(posts, sortMode)
+  // apply search filter (client-side) then sort
+  const basePosts = searchInput.trim()
+    ? posts.filter(p => {
+        const q = searchInput.toLowerCase()
+        return (p.title || '').toLowerCase().includes(q) || (p.content || '').toLowerCase().includes(q)
+      })
+    : posts
+
+  const displayedPosts = getSortedPosts(basePosts, sortMode)
   const content = displayedPosts.length === 0
-  ? <div className="empty">no posts yet</div>
-  : displayedPosts.map((post, idx) => (
-      <div
-        key={post.id}
-        className={`post-item ${post.category ?? ''}`}
-        data-index={idx}
-      >
-        <PostOverview post={post} />
-      </div>
-    ))
+    ? <div className="empty">no posts yet</div>
+    : displayedPosts.map((post, idx) => (
+        <div
+          key={post.id}
+          className={`post-item ${post.category ?? ''}`}
+          data-index={idx}
+        >
+          <PostOverview post={post} />
+        </div>
+      ))
 
   return (
     <div className='posts-grid'>
@@ -126,6 +132,12 @@ const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
         <Link to='/posts'>
           <button className='postBtn'> View All Posts </button>
         </Link>
+        <input
+        type="text"
+        placeholder="search for posts..."
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)}
+        />
         <Link to='/posts/new'>
             <button className='postBtn'> Create Post </button>
         </Link>
