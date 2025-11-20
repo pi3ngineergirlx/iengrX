@@ -211,14 +211,7 @@ const PostDetailView = ({ refresh } = {}) => {
   return (
     <div className="PostDetailView">
       <article className="post-full">
-        <header className="post-full__header">
-          <img src={postInfo.avatar_url || '/avatar-fallback.png'} alt={postInfo.display_name || 'Author'} className="post-author__avatar" />
-          <div>
-            <h2>{postInfo.title}</h2>
-            <div className="meta">By {postInfo.display_name || 'Unknown'} — {new Date(postInfo.created_at || postInfo.timestamp).toLocaleString()}</div>
-          </div>
-        </header>
-
+        {/* If editing, show the full edit form in place of the display view */}
         {editing ? (
           <form onSubmit={saveEdit} className="edit-post-form">
             <label>Title</label>
@@ -233,16 +226,38 @@ const PostDetailView = ({ refresh } = {}) => {
             </div>
           </form>
         ) : (
-          <section className="post-full__body">
-            {postInfo.image_url && <img src={postInfo.image_url} alt="attached" className="post-image" />}
-            <p>{postInfo.content}</p>
-          </section>
-        )}
+          <>
+            {/* Title */}
+            <h1 className="post-title">{postInfo.title}</h1>
 
-        <footer className="post-full__footer">
-          <button onClick={toggleLike} disabled={busy}>{likedByMe ? 'Unlike' : 'Like'} ({likesCount})</button>
-          {isOwner && !editing && <button onClick={() => setEditing(true)}>Edit</button>}
-        </footer>
+            {/* Author (with avatar) */}
+            <div className="post-author-line">
+              <img src={postInfo.avatar_url || '/avatar-fallback.png'} alt={postInfo.display_name || 'post author:'} className="post-author__avatar" />
+              <span className="post-author-name">{postInfo.display_name || 'anonymous'}</span>
+            </div>
+
+            {/* Timestamp */}
+            <div className="post-timestamp">{new Date(postInfo.created_at || postInfo.timestamp).toLocaleString()}</div>
+
+            {/* Image (if present) */}
+            {postInfo.image_url && (
+              <div className="post-image-wrap">
+                <img src={postInfo.image_url} alt="attached" className="post-image" />
+              </div>
+            )}
+
+            {/* Post text */}
+            <section className="post-full__body">
+              <p>{postInfo.content}</p>
+            </section>
+
+            {/* Likes */}
+            <footer className="post-likes">
+              <button onClick={toggleLike} disabled={busy} id='post-like-button'>{likedByMe ? 'unlike </3' : 'like <3'} ({likesCount})</button>
+              {isOwner && !editing && <button onClick={() => setEditing(true)}>Edit</button>}
+            </footer>
+          </>
+        )}
       </article>
 
       <section className="comments-section">
