@@ -57,6 +57,23 @@ const PostOverview = ({ post, showViewButton = true }) => {
     return `${days}d`
   }
 
+  const handleLikeClick = async () => {
+    // optimistic UI update: increment locally immediately
+    setLikesCount(c => (c || 0) + 1)
+    try {
+      // attempt to persist the like. Allow anonymous likes (user_id null).
+      // This may fail if your DB/RLS denies anonymous inserts; we don't revert the UI here.
+      const { error } = await supabase.from('post_likes').insert([{ post_id: post.id, user_id: null }])
+      if (error) {
+        // eslint-disable-next-line no-console
+        console.warn('Could not persist like:', error.message || error)
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.warn('Error persisting like:', err)
+    }
+  }
+
   return (
     <div className="post-overview">
       <div className="post-overview-top">
@@ -75,7 +92,9 @@ const PostOverview = ({ post, showViewButton = true }) => {
       </div>
       <h3 className="post-overview-title">{post.title || '(no title)'}</h3>
       <div className='post-overview-bottom'>
-        <span className="post-overview-likes">❤️ {likesCount} likes</span>
+        <button type="button" className="post-like-btn" onClick={handleLikeClick} aria-label={`Like post ${post.id}`}>
+          ❤️ {likesCount} likes
+        </button>
         {showViewButton && (
         <div className="post-overview-view-button">
           <button onClick={() => navigate(`/posts/${post.id}`)}>view post details</button>
