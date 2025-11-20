@@ -30,7 +30,9 @@ const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
         const { data, error: fetchError } = await query
         if (fetchError) throw fetchError
         if (mounted) {
-          setPosts(data || [])
+          // normalize likes field so sorting by likes works regardless of API shape
+          const normalized = (data || []).map(d => ({ ...d, likes: d.likes ?? d.likes_count ?? 0 }))
+          setPosts(normalized)
           setLoading(false)
           // If we got data back, set a quick local total while the exact DB count is fetched
           if (data) setTotalCount(data.length)
@@ -112,7 +114,7 @@ const PostsGrid = ({ threadId = null, category = null, refresh } = {}) => {
           className={`post-item ${post.category ?? ''}`}
           data-index={idx}
         >
-          <PostOverview post={post} />
+          <PostOverview post={post} onLike={(id, delta) => setPosts(prev => prev.map(p => p.id === id ? { ...p, likes: (p.likes || 0) + (delta || 0) } : p))} />
         </div>
       ))
 

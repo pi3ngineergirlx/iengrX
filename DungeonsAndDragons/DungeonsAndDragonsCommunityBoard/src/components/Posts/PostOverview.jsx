@@ -7,7 +7,7 @@ import './Posts.css'
 // Props:
 // - post: object with at least { id, title, display_name, username, avatar_url, created_at (or timestamp), likes_count }
 // - showViewButton: optional boolean (default true)
-const PostOverview = ({ post, showViewButton = true }) => {
+const PostOverview = ({ post, showViewButton = true, onLike }) => {
   const navigate = useNavigate()
   const [likesCount, setLikesCount] = useState(post?.likes_count ?? post?.likes ?? 0)
 
@@ -68,6 +68,8 @@ const PostOverview = ({ post, showViewButton = true }) => {
         // eslint-disable-next-line no-console
         console.warn('Could not persist like:', error.message || error)
       }
+      // notify parent (delta = +1) so it can update its copy of the posts list
+      try { onLike && onLike(post.id, 1) } catch (e) { /* ignore */ }
     } catch (err) {
       // eslint-disable-next-line no-console
       console.warn('Error persisting like:', err)

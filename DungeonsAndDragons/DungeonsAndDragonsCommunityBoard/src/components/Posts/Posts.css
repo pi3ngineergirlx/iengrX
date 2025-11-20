@@ -30,6 +30,11 @@
     /* colors */
     background-color: black;
     color: white;
+    /* inline flexbox */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
 }
 .postBtn:hover {
     /* colors */
@@ -318,12 +323,6 @@ textarea {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-.postBtn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap; /* keep the button text on a single line */
 }
 
 /* submit button */
