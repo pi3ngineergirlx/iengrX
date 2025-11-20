@@ -137,23 +137,32 @@ const PostDetailView = ({ refresh } = {}) => {
   }
 
   const toggleLike = async () => {
-    if (!user) {
-      navigate('/login')
-      return
-    }
     setBusy(true)
     try {
-      if (likedByMe) {
-        // remove like
-        const { error } = await supabase.from('post_likes').delete().match({ post_id: postId, user_id: user.id })
-        if (error) throw error
-        setLikesCount(c => Math.max(0, c - 1))
-        setLikedByMe(false)
-      } else {
-        const { error } = await supabase.from('post_likes').insert([{ post_id: postId, user_id: user.id }])
-        if (error) throw error
-        setLikesCount(c => c + 1)
-        setLikedByMe(true)
+      // Always allow anonymous likes and increment the counter (unlimited clicks)
+      // Optimistic UI: increment local count immediately
+      setLikesCount(c => (c || 0) + 1)
+
+      // persist a like row (user_id may be null)
+      try {
+        const { error: insertErr } = await supabase.from('post_likes').insert([{ post_id: postId, user_id: user?.id ?? null }])
+        if (insertErr) console.warn('Could not persist like:', insertErr)
+      } catch (err) {
+        console.warn('Error persisting like:', err)
+      }
+
+      // Update posts.likes column to keep canonical count in posts table
+      try {
+        const newLikes = (likesCount || 0) + 1
+        // use maybeSingle to avoid coercion errors and ensure we only set when data returned
+        const { data: updated, error: updErr } = await supabase.from('posts').update({ likes: newLikes }).eq('id', postId).select().maybeSingle()
+        if (!updErr && updated) {
+          setPostInfo(updated)
+        } else if (updErr) {
+          console.warn('Failed to update posts.likes', updErr)
+        }
+      } catch (err) {
+        console.warn('Failed to update posts.likes', err)
       }
     } catch (err) {
       console.error('Like toggle error', err)
@@ -265,7 +274,6 @@ const PostDetailView = ({ refresh } = {}) => {
         <ul className="comments-list">
           {comments.map(c => (
             <li key={c.id} className="comment">
-              <img src={c.avatar_url || '/avatar-fallback.png'} alt={c.display_name || 'User'} className="comment-avatar" />
               <div>
                 <div className="comment-meta">{c.display_name || 'User'} • {new Date(c.created_at).toLocaleString()}</div>
                 <div className="comment-body">{c.content}</div>
