@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './hooks/useAuth.jsx'
 import './index.css';
 import App from './App.jsx';
 import CharacterDesigner from './components/character-designer/CharacterDesigner';
@@ -12,7 +13,8 @@ import Layout from './components/Layout'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<App />} />
@@ -24,6 +26,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="characterdesigner/*" element={<CharacterDesigner />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
   </StrictMode>
 );

@@ -100,11 +100,7 @@ const PostDetailView = ({ refresh } = {}) => {
 
   const saveEdit = async (e) => {
     e.preventDefault()
-    if (!user || !postInfo) return
-    if (user.id !== postInfo.user_id) {
-      setError('You are not allowed to edit this post')
-      return
-    }
+    if (!postInfo) return
     setBusy(true)
     try {
       let image_url = postInfo.image_url || null
@@ -123,14 +119,71 @@ const PostDetailView = ({ refresh } = {}) => {
         image_url
       }
 
-      const { data, error: updateErr } = await supabase.from('posts').update(updates).eq('id', postId).select().single()
+  // select('*') may return an array or object depending on client/server;
+  // normalize the response to avoid single-object coercion errors.
+      // Use the canonical id from the loaded post row to avoid URL/param mismatches
+      const targetId = postInfo?.id ?? postId
+      // Debug: show what we're sending
+      // eslint-disable-next-line no-console
+      console.debug('Attempting post update', { targetId, updates })
+      const { data, error: updateErr } = await supabase.from('posts').update(updates).eq('id', targetId).select('*')
+      // Debug: show full response for easier diagnosis (RLS, id mismatch, permissions)
+      // eslint-disable-next-line no-console
+      console.debug('Supabase update response', { targetId, data, updateErr })
       if (updateErr) throw updateErr
-      setPostInfo(data)
+      const updatedPost = Array.isArray(data) ? data[0] : data
+      if (!updatedPost) {
+        // eslint-disable-next-line no-console
+        console.error('Update returned no row', { targetId, data, updateErr })
+        throw new Error('Update returned no row — check RLS, id, or server logs (see console)')
+      }
+  setPostInfo(updatedPost)
       setEditing(false)
       if (typeof refresh === 'function') await refresh()
     } catch (err) {
       console.error('Save edit error', err)
       setError(err?.message || String(err))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const deletePost = async () => {
+    if (!postInfo) return
+    // allow anonymous delete for now (no ownership check)
+    // double-check with the user
+    // eslint-disable-next-line no-restricted-globals
+    const ok = confirm('Delete this post? This cannot be undone.')
+    if (!ok) return
+    setBusy(true)
+    try {
+  // Request the deleted row back to confirm deletion and detect RLS failures
+      const targetId = postInfo?.id ?? postId
+      // Debug: log delete attempt
+      // eslint-disable-next-line no-console
+      console.debug('Attempting delete', { targetId })
+      const { data: delData, error: delErr } = await supabase.from('posts').delete().eq('id', targetId).select('*')
+      // Debug: show delete response
+      // eslint-disable-next-line no-console
+      console.debug('Supabase delete response', { targetId, delData, delErr })
+      if (delErr) {
+        // eslint-disable-next-line no-console
+        console.error('Delete error from Supabase', delErr)
+        throw delErr
+      }
+      const deleted = Array.isArray(delData) ? delData[0] : delData
+      if (!deleted) {
+        // eslint-disable-next-line no-console
+        console.error('Delete returned no row', { targetId, delData })
+        throw new Error('Delete did not remove a row — check RLS, id, or server logs (see console)')
+      }
+      // notify parent to refresh lists if provided
+      if (typeof refresh === 'function') await refresh()
+      // navigate back to posts list
+      navigate('/posts')
+    } catch (err) {
+      console.error('Delete post error', err)
+      setError(err?.message || String(err) || 'Could not delete post')
     } finally {
       setBusy(false)
     }
@@ -215,7 +268,8 @@ const PostDetailView = ({ refresh } = {}) => {
   if (error) return <div className="form-error">{error}</div>
   if (!postInfo) return <div>Post not found</div>
 
-  const isOwner = user && postInfo.user_id === user.id
+  // For project requirements allow edit/delete without login for now
+  const isOwner = true
 
   return (
     <div className="PostDetailView">
@@ -263,7 +317,12 @@ const PostDetailView = ({ refresh } = {}) => {
             {/* Likes */}
             <footer className="post-likes">
               <button onClick={toggleLike} disabled={busy} id='post-like-button'>{likedByMe ? 'unlike </3' : 'like <3'} ({likesCount})</button>
-              {isOwner && !editing && <button onClick={() => setEditing(true)}>Edit</button>}
+              {isOwner && !editing && (
+                <>
+                  <button onClick={() => setEditing(true)}>Edit</button>
+                  <button onClick={deletePost} disabled={busy} className="danger">Delete</button>
+                </>
+              )}
             </footer>
           </>
         )}
